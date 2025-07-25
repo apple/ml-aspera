@@ -1,0 +1,50 @@
+defaults:
+  - turn_templates: default
+  - generation_args@_here_: default
+  - parser: default
+  - annotation: default
+  - guidelines: org_events
+
+# apps with documentation stubs in src/aspera/apps and implementation in src/aspera/apps_implementation
+apps: [exceptions, time_utils, room_booking, company_directory, work_calendar]
+# additional tools the LLM can for evaluation
+# documentation stubs in src/aspera/evaluation_tools and implementation in src/aspera/evaluation_tools_implementation
+# app_name::tool (where app_name is module under src/aspera/evaluation_tools
+#  and tool is a function therein)
+simulation_tools:
+  - room_booking::simulate_conference_room
+  - company_directory::simulate_org_structure
+  - company_directory::simulate_vacation_schedule
+  - work_calendar::simulate_user_calendar
+  - work_calendar::simulate_employee_calendar
+# additional tools the LLM can for evaluation
+# documentation stubs in src/aspera/evaluation_tools and implementation in src/aspera/evaluation_tools_implementation
+# app_name::tool (where app_name is module under src/aspera/evaluation_tools
+#  and tool is a function therein)
+evaluation_tools:
+  - exceptions::SolutionError
+  - work_calendar::assert_user_calendar_shared
+  - time_utils::repetition_schedule
+# in-context examples for data generation, located in src/aspera/examples
+examples:
+  query_solution: [work_calendar_query_solution]
+  runtime_setup: [work_calendar_runtime_setup]
+  evaluation: [work_calendar_evaluation]
+# human-authored queries to annotate. Across interactive sessions, this list is
+# filtered to exclude queries that have been annotated already.
+queries:
+  - "Hey, [Assistant], I just booked part of Friday next week off in the system, which meetings do I have to cancel?"
+  - "Hey, [Assistant], notify me if Bob has any high importance meetings tomorrow."
+  - "Hey, [Assistant], provide me with details for the conflicting events in my calendar."
+  - "Hey, [Assistant], list the office locations of all employees."
+  - "Hey, [Assistant], what is the capacity of Room A?"
+  - "Hey, [Assistant], is Jane is on leave today?"
+
+# if specified, this string will be concatenated with the apps configured in this scenario. Otherwise, a string formed
+#  by concatenating the name of the in-context examples modules is created
+scenario_name_suffix: org_events
+hydra:
+  run:
+    dir: ${root:session_logs/query_labelling/${scenario_name:${apps},${examples},${scenario_name_suffix}}}
+
+output_dir: ${hydra:run.dir}

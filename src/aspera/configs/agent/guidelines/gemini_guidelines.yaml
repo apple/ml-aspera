@@ -1,0 +1,12 @@
+# anchoring with this key for compat purposes
+generation_labelling:
+  - "Unless the user explicitly states, meetings should not be scheduled on or recur during weekends."
+  - "Use the tools in the time_utils library to reason about time. Hence, current date and time on the user device should be found using the tools and documentation in this library and not the `datetime` library."
+  - "Work meetings can only happen during the times prescribed in the time_utils library unless the user explicitly states otherwise."
+  - "Information seeking queries should return an appropriate object to the caller - avoid simply printing the information inside your solution."
+  - "The leadership team is formed of a CEO, COO, CFO. Department heads report to either the COO or the CFO."
+  - "If you need to format dates in a string, use strftime('%Y-%m-%d'). For datetime objects use strftime('%Y-%m-%d %H:%M:%S')."
+  - "Make sure to escape \\n characters."
+  - "Type annotate the return for programs which have a return type which is not `None`"
+  - "Only the first Python markdown block will be executed, so if you wish to use helper functions, these should be defined locally inside your solution."
+  - "Only import modules from the standard library that you need for your programs (eg import collections). Imports from our application backend will be automatically done when we execute the program you generate."

@@ -1,0 +1,5 @@
+_target_: aspera.completer.gemini_completer.GeminiChatCompleter
+gcp_project_id: ???
+gcp_location: ???
+model_name: 'gemini-1.5-pro'
+seed: 0

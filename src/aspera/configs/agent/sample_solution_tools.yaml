@@ -1,0 +1,39 @@
+# add another config file and change
+#  defaults to experiment with different completers
+defaults:
+  - completer: openai
+  - parser: default
+  - guidelines: default
+
+data_root: ${root:asper_bench}
+queries_dir: ${data_root}/plans
+gold_sources_dir: ${data_root}/code
+
+# agent definition
+agent:
+  _target_: aspera.agent.sample_solution_tools.SampleSolutionToolsAgent
+  queries_dir: ${queries_dir}
+  parser: ${parser}
+  completer: ${completer}
+  system:
+    _target_: aspera.prompting.system_turn_templates.agent_system_turn_with_guidelines
+    _partial_: true
+  user:
+    _target_: aspera.prompting.user_turn_templates.agent_user_turn_with_return_type_instruction
+    _partial_: true
+  guidelines: ${guidelines}
+
+debug: false
+start: 1
+end: 250
+out_dir: ${root:results/sample_solution_tools}/${completer.model_name}/${now:%Y-%m-%d_%H-%M-%S}_seed_${completer.seed}
+# directory containing python modules where the LLM plans
+# can be run manually in the sandbox environment to simplify
+# error analysis
+executable_output_dir: ${create_dir:${out_dir}/executable}
+# similarly structured directory with plain-text versions of the prompts for easy diff-ing
+prompts_output_dir: ${create_dir:${out_dir}/prompts}
+completion_output_dir: ${create_dir:${out_dir}/completions}
+hydra:
+  run:
+    dir: ${out_dir}

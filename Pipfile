@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pip_conf_index_global"
+
+[packages]
+tenacity = "*"
+requests = "*"
+google-cloud-aiplatform = "*"
+per-aspera = {editable = true, extras = ["testing"], path = "."}
+torch = "*"
+aspera = {extras = ["testing"], file = ".", editable = true}
+
+[dev-packages]
+tox = "*"
+sphinx = "*"
+pre-commit = "*"
+pytest = "*"
+pytest-cov = "*"
+
+[requires]
+python_version = "3.11"

@@ -1,0 +1,14 @@
+# annotation covers both query generation & labelling - we tell the LLM what can be assumed in the program
+generation_labelling:
+  - "Employee names are assumed unique, so you may use `find_employee(name)[0]` for resolving a name to an `Employee` object. Use this sparingly - even though there may be multiple employees with the same name, the user query might give additional information which resolves the ambiguity (eg specify the meeting time). If you decided to make this assumption add a 'by structure guideline #1' comment."
+  - "Where appropriate, if the user query requires modifying a specific event (eg 'my catch-up meeting with Pete' etc) but after searching and filtering more than one event is found, a RequestUserInput error detailing the number of events found and the first event details should be raised."
+  - "Type annotate the return for programs which have a return type which is not `None`"
+# displayed when the model generates code to set up the environment
+runtime_setup:
+  - "Dates should be grounded using the tools in the time_utils library. When doing so, add a 'setup guideline #1' comment"
+  - "Work meetings can start after 9:06 AM and should end before 5:10 PM. When doing so, add a 'setup guideline #2' comment"
+  - "Employee names are assumed unique, so you may use `find_employee(name)[0]` for resolving a name to an `Employee` object. Add a 'setup guideline #3' comment when doing so"
+  - "Ensure you follow all the TODOs with appropriate steps, but don't be afraid to do additional steps if you think it necessary - our developers may not write detailed enough TODOs"
+evaluation:
+  - "fields of type list[Employee] of events returned by `find_events` are sorted alphabetically according to the `name` attribute"
+  -  "When `add_event` is called without an `ends_at` parameter, a default duration of 16 minutes is assumed when writing the event to the underlying database"

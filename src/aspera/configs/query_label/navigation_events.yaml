@@ -1,0 +1,24 @@
+defaults:
+  - turn_templates: default
+  - generation_args@_here_: default
+  - parser: default
+  - annotation: default
+  - guidelines: no_guidelines
+
+apps: [exceptions, time_utils, company_directory, work_calendar, navigation]
+# tools the LLM can use to simulate the environment state
+# app_name::tool (where app_name is module under src/aspera/runtime_state_generation_tools
+#  and tool is a function therein
+simulation_tools:
+  - company_directory::simulate_org_structure
+examples:
+  query_solution: [work_calendar_query_solution]
+  runtime_setup: ~
+queries:
+  - "Hey, [Assistant], find directions to my next 1:1 with Alex."
+  - "Hey, [Assistant], find directions to my next meeting."
+hydra:
+  run:
+    dir: ${root:session_logs/query_labelling/${scenario_name:${apps},${examples}}}
+
+output_dir: ${hydra:run.dir}

@@ -1,0 +1,5 @@
+# anchoring with this key for compat purposes
+generation_labelling:
+  - "Use the tools in the time_utils library to reason about time. Hence, current date and time on the user device should be found using the tools and documentation in this library and not the `datetime` library."
+  - "Work meetings can only happen during the times prescribed in the time_utils library unless the user explicitly states otherwise."
+  - "The leadership team is formed of a CEO, COO, CFO. Department heads report to either the COO or the CFO. Appropriate tools will have to be imported and combined to resolve these employees to `Employee` objects required by all apis."

@@ -1,0 +1,76 @@
+# instructions for data curator, displayed at the top of the
+# staging module where the queries and programs generated are dumped
+# for inspection/editing
+instructions: |
+  # This module contains the parsed generated programs.
+  # Each program is preceded by a comment with the query it is grounded to.
+  # To annotate the programs:
+  #   - add '# OK:' on the line before the query to mark the program as correct
+  #   - add '# Quarantine:' followed by an optional comment on the line before the query if the generation needs further discussion
+  #        and should not be included in the corpus for now
+  #   - add '# Feedback:', write your feedback and then edit the program. The edited program will be merged to the corpus
+  # Ensure that all comments, no matter how long, are on a single line
+# instructions for data curator, displayed at the top of the
+# staging module when programs generating the environment state
+# for a given query are dumped for inspection/editing
+state_generation_instructions: |
+  # This module contains the parsed generated program along the code the LLM generated for setting up the environment state.
+  # The program we are generating the state for is preceded by a comment with the query it is grounded to.
+  # To annotate the runtime state generation programs:
+  #   - add '# OK:' on the line before the query to mark the program as correct
+  #   - add '# Feedback:', write your feedback and then edit the program. The edited program will be saved to
+  #     along with the initial version
+  # Ensure that all comments, no matter how long, are on a single line
+  # You may also add additional custom programs in the file to simulate different environment states for the query.
+  #   If you do so, add a "# OK:" comment on the line before the program to ensure it can be parsed
+# instructions for data curator, displayed at the top of the
+# staging module when programs evaluating the execution
+# for a given query are dumped for inspection/editing
+evaluation_instructions: |
+  # This module contains the curated generated program, the code the LLM generated for setting up the environment state
+  # and the proposed evaluation function.
+  # The program we are generating the evaluation for is preceded by a comment with the query it is grounded to.
+  # To annotate the evaluation programs:
+  #   - add '# OK:' on the line before the query to mark the program as correct
+  #   - add '# Feedback:', write your feedback and then edit the program. The edited program will be saved to
+  #     along with the initial version
+  # Ensure that all comments, no matter how long, are on a single line
+# set this to the path of a session log from src/session_logs/query_labelling/{scenario_name}/interaction_*.json
+# file to restore the state in case of application crashes.
+restore_path: ~
+debug: false
+# if `true` a follow-up turn prompting the model to generate code that
+# creates necessary entities for query execution. Remember to
+# set `batch_size=1` inside the generation_args config group in this case
+generate_environment_state_setup_code: true
+# if `true` a follow-up turn prompting the model to generate code that
+#  tests the execution results are as intended. Must set `generate_environment_state_setup_code`
+# to true if enabled
+generate_eval_code: true
+# shows which tools will be shown to the LLM for simulating the env state
+# the user can interactively override them and implement new tools.
+show_simulation_tools: true
+# if not None, suffixes the directories below to avoid corrupting the
+# data while in debug/testing new features
+_suffix: ${set_suffix:${.debug}}
+# a batch of queries is first staged for inspection
+stage_dir: ${create_dir:${output_dir}/staging}
+stage_file: ${.stage_dir}/queries.nt
+# user can discard any queries that need discussion etc to quarantine
+quarantine_dir: ${create_dir:${output_dir}/quarantine, ${._suffix}}
+# we also save corrections to hallucinated programs - very valuable training data
+corrections_dir: ${create_dir:${root:data/plan_corrections}, ${._suffix}}
+# we also save corrections to code the LLM generated to set up the environment state
+state_generation_correction_dir: ${create_dir:${root:data/env_state_generation_corrections}, ${._suffix}}
+# save any corrections to code LLM generated to test the query executed was correct
+eval_correction_dir: ${create_dir:${root:data/eval_functions_corrections}, ${._suffix}}
+# save the queries and plans
+corpus_dir: ${create_dir:${root:data/plans}, ${._suffix}}
+# directory where the initial and final databases for each query are saved
+database_dir: ${create_dir:${root:data/databases}, ${._suffix}}
+# the query execution and database generation code is saved as well
+modules_dir: ${create_dir:${root:data/code}, ${._suffix}}
+# shows the prompt the LLM is called with - use for debugging
+show_prompt: ${show_prompt:${.debug}}
+# the user is prompted to copy a "sanitised" completion to this file if the parser fails
+recovery_file: ${.stage_dir}/recovery.py

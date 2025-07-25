@@ -1,0 +1,8 @@
+# how many queries we display at once
+page_size: ???
+# pass ensure same queries are displayed across runs
+seed: ~
+
+data_root: ${root:asper_bench}
+queries_dir: ${data_root}/plans
+edits_dir: ${data_root}/plan_corrections

@@ -1,0 +1,25 @@
+# the query ID for which annotations should be updated
+query_id: ???
+# plan | state | eval
+program_type: ???
+# there can be multiple runtime state generation and evaluation programs
+#  so the index of the program to be updated must be specified
+program_idx: ???
+
+# asset directories
+assets_dir: ${root:data}
+code: ${assets_dir}/code
+plans: ${assets_dir}/plans
+plan_edits: ${assets_dir}/plan_corrections
+state_edits: ${assets_dir}/env_state_generation_corrections
+eval_edits: ${assets_dir}/eval_functions_corrections
+
+# index files
+plans_index: ${plans}/query_to_query_id.json
+plan_edits_index: ${plan_edits}/query_to_query_id.json
+state_edits_index: ${state_edits}/query_to_query_id.json
+eval_edits_index: ${eval_edits}/query_to_query_id.json
+plans_id_to_shard: ${plans}/query_id_to_shard.json
+plan_edits_id_to_shard: ${plan_edits}/query_id_to_shard.json
+state_edits_id_to_shard: ${state_edits}/query_id_to_shard.json
+eval_edits_id_to_shard: ${eval_edits}/query_id_to_shard.json

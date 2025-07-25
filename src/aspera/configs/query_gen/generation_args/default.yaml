@@ -1,0 +1,14 @@
+n_queries:
+  initial: 2
+
+completer_args:
+  _convert_: object
+  # output max available tokens for the model, usually 4096
+  max_tokens: -1
+  model_name: 'gpt-4o'
+
+hydra:
+  run:
+    dir: ${root:session_logs/query_generation/${scenario_name:${apps},${examples}}}
+
+output_dir: ${hydra:run.dir}

@@ -1,0 +1,33 @@
+defaults:
+  - completer: openai
+  - parser: simple_program_finder
+  - guidelines: refined
+
+
+results_file: ???
+output_dir: ${parent:${results_file}}/llm_evaluation/${completer.model_name}
+data_root: ${root:asper_bench}
+queries_dir: ${data_root}/plans
+# evaluator definition
+evaluator:
+  _target_: aspera.llm_evaluator.LLMEvaluator
+  res_path: ${results_file}
+  out_dir: ${output_dir}
+  queries_dir: ${queries_dir}
+  parser: ${parser}
+  completer: ${completer}
+  system:
+    _target_: aspera.prompting.system_turn_templates.llm_as_judge_system_turn_guidelines_first
+    _partial_: true
+  user:
+    _target_: aspera.prompting.user_turn_templates.llm_evaluator_assessment_docstrings
+    _partial_: true
+  examples_module: work_calendar_llm_evaluator_4_icl
+  guidelines: ${guidelines}
+  debug: ${debug}
+
+debug: false
+hydra:
+  run:
+    dir:
+      ${output_dir}

@@ -1,0 +1,12 @@
+# How many queries will be presented to the model for labelling at once
+# Must be 1 if `generate_environment_state_setup_code=True` inside the annotation config group
+batch_size: 1
+
+completer_args:
+  _convert_: object
+  # output max available tokens for the model, usually 4096
+  max_tokens: -1
+  model_name: 'gpt-4o'
+  temperature: 0.7
+  timeout: 60
+  max_retries: 3

@@ -1,0 +1,9 @@
+# anchoring with this key for compat purposes
+generation_labelling:
+  - "Unless the user explicitly states, meetings should not be scheduled on or recur during weekends."
+  - "The tools in the time_utils library should be used to reason about time (eg parse complex time & date expressions, date references etc)"
+  - "The current date and time on the user device should be found by calling `time_utils.now_` and not the `datetime.datetime.now` because the backend is grounded to the date displayed by 'now_' and calculations with respect to the current date are not correct."
+  - "Work meetings can only happen during the times prescribed in the time_utils library unless the user explicitly states or otherwise."
+  - "Information seeking queries (eg direct questions addressed to the assistant) should return an appropriate object to the caller - printing the information inside without an appropriate return is a guideline violation."
+  - "The leadership team is formed of a CEO, COO, CFO. Department heads report to either the COO or the CFO."
+  - "Dates formatted as strings should use strftime('%Y-%m-%d'). Datetime objects should be formatted using strftime('%Y-%m-%d %H:%M:%S')."

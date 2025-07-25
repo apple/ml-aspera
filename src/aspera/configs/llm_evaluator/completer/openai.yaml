@@ -1,0 +1,7 @@
+_target_: aspera.completer.openai_completer.OpenAiChatCompleter
+max_tokens: -1
+model_name: 'o1-preview-2024-09-12'
+temperature: 1.0
+timeout: 180
+max_retries: 5
+seed: 0

@@ -1,0 +1,11 @@
+completion_preprocessor:
+  _target_: aspera.parser.PipelineProcessor
+  processors:
+    - _target_: aspera.parser.ProgramStringFinder
+    # occasionally the LLM may call the runtime setup function
+    #  which will break the json db serialisation if not removed
+    - _target_: aspera.parser.RemoveModuleLevelFunctionCalls
+
+parser:
+  _target_: aspera.parser.ProgramParserWithImportHandling
+  preprocessor: ${..completion_preprocessor}

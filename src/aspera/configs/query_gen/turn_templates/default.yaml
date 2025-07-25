@@ -1,0 +1,18 @@
+system:
+  _target_: aspera.prompting.system_turn_templates.simple_program_generation_with_structure_guidelines
+  _partial_: true
+user_start:
+  _target_: aspera.prompting.user_turn_templates.start_turn
+  _partial_: true
+user_start_with_query_history:
+  _target_: aspera.prompting.user_turn_templates.start_turn_with_query_history
+  _partial_: true
+user_program_edit_feedback:
+  _target_: aspera.prompting.user_turn_templates.annotation_edit_feedback
+  _partial_: true
+user_environment_setup_request:
+  _target_: aspera.prompting.user_turn_templates.entity_generation_followup_prompt
+  _partial_: true
+user_evaluation_code_generation:
+  _target_: aspera.prompting.user_turn_templates.eval_function_followup_prompt
+  _partial_: true

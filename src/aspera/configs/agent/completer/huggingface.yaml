@@ -1,0 +1,4 @@
+_target_: aspera.completer.hf_completer.HuggingFaceCompleter
+model_name: ???
+max_output_tokens: 4096
+seed: 0

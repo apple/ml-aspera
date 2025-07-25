@@ -1,0 +1,20 @@
+# annotation covers both query generation & labelling - we tell the LLM what can be assumed in the program
+generation_labelling:
+  - "Employee names are assumed unique, so you may use `find_employee(name)[0]` for resolving a name to an `Employee` object. Use this sparingly - even though there may be multiple employees with the same name, the user query might give additional information which resolves the ambiguity (eg specify the meeting time). If you decided to make this assumption add a 'by structure guideline #1' comment."
+  - "Work meetings can start after 9:06 AM and should end before 5:10 PM. They don't happen at the weekend unless the user explicitly mentions so."
+  - "Type annotate the return for programs which have a return type which is not `None`"
+  - "Do not call functions with default optional values"
+# displayed when the model generates code to set up the environment
+runtime_setup:
+  - "Dates should be grounded using the tools in the time_utils library. When doing so, add a 'setup guideline #1' comment"
+  - "Work meetings can start after 9:06 AM and should end before 5:10 PM. When doing so, add a 'setup guideline #2' comment"
+  - "Events assumed to occur in the future should start after the date and time specified by time_utils.now_(), whereas events in the past should finish before time_utils.now_(). When doing so, add a 'setup guideline #3' comment"
+  - "Employee names are assumed unique, so you may use `find_employee(name)[0]` for resolving a name to an `Employee` object. When doing so, add a 'setup guideline #4' comment"
+  - "Ensure you follow all the TODOs with appropriate steps, but don't be afraid to do additional steps if you think it necessary - our developers may not write detailed enough TODOs"
+evaluation:
+  - "fields of type `list[Employee]` of events returned by `find_events` are sorted alphabetically according to the `name` attribute. Sort attendees lists you create accordingly. When doing so, add a 'testing guideline #1' comment"
+  - "For queries that have a return type, consider a range of possible alternative return types that could have been returned instead by the executable and check the result correctness in those cases too. Add a '#testing guideline #2' comment in this case"
+  - "When checking events requested by the user were created, never test equality of the 'subject' attribute because variations in the meeting name can affect test robustness."
+  - "When `add_event` is called without an `ends_at` parameter, a default duration of 16 minutes is assumed when writing the event to the underlying database. Check that the events for which end time or duration is not specified satisfy this constraint."
+  - "SolutionError message is always 'Incorrect Solution'."
+  - "Where possible, use the information in the runtime environment setup function below to simplify testing code"

@@ -1,0 +1,11 @@
+# anchoring with this key for compat purposes
+generation_labelling:
+  - "When the user is scheduling a *new* event, multiple events or recurring events the program should ensure these events are not scheduled at the weekend unless the user states the date when the event should occur. There is no need to check this assumption if the user updates an existing event."
+  - "The current date and time on the user device should be found by calling `time_utils.now_` and not the `datetime.datetime.now`."
+  - "Programs executing direct questions the user addressed to the assistant (eg what's my busiest day next week?) should return an appropriate object to the caller as opposed to printing the information."
+  - "The leadership team is formed of a CEO, COO, CFO and department heads report to either the COO or the CFO. When solving queries involving these roles, the assistant should combine tools in the `company_directory` module to identify them: `find_employee` can only take a person's name as an input, not a role."
+  - "The only employees who does not have a manager is the CEO"
+  - "Dates formatted as strings should use strftime('%Y-%m-%d'). Datetime objects should be formatted using strftime('%Y-%m-%d %H:%M:%S')."
+  - "`add_event` is used for creating new events and deleting existing ones. Therefore, if calling `add_event` on an instance returned by `find_events` a `delete_call` is not necessary"
+  - "Generally speaking, we don't expect 'RequiresUserInput' to be raised after find_employee calls, because it may be assumed employee names are unique, unless the user request implies this is not the case. However, if the user says 'Joe from marketing' or 'colleagues called Mark', then `find_employee('Joe')[0] is flawed as are attempts to exactly match employee names to Mark."
+  - "get_calendar is only used for retrieving events from colleagues' calendar - get_calendar(get_current_user()) is not a valid way to return the user events"
